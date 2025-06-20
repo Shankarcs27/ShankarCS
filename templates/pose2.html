@@ -1,0 +1,26 @@
+{% extends "base_pose.html" %}
+
+{% block title %}Hastauttanasana - Yoga Pose{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="display-4 mb-4">Hastauttanasana (Raised Arms Pose)</h1>
+    <img src="{{ url_for('static', filename='images/hastauttanasana.jpg') }}" alt="Hastauttanasana" class="pose-image">
+    <div class="pose-description">
+        <h3>Instructions:</h3>
+        <p>From Pranamasana, raise your arms above your head. Keep your arms straight and palms facing each other. Arch your back slightly and look up.</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const instructions = [
+        "From prayer pose, raise your arms above your head",
+        "Keep your arms straight and palms facing each other",
+        "Arch your back slightly",
+        "Look up towards your hands",
+        "Breathe deeply and maintain the pose"
+    ];
+</script>
+{% endblock %} 

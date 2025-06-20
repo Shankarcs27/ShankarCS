@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to Yoga Pose Guide{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section py-5">
+    <div class="row align-items-center">
+        <div class="col-lg-6">
+            <h1 class="display-4 fw-bold mb-4">Master Your Yoga Poses with AI Guidance</h1>
+            <p class="lead mb-4">Perfect your yoga practice with real-time pose analysis and personalized feedback. Our AI-powered system helps you achieve proper alignment and form.</p>
+            <a href="#poses" class="btn btn-primary btn-lg">
+                Get Started <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+        <div class="col-lg-6">
+            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" 
+                 alt="Yoga Practice" class="img-fluid rounded-3 shadow-lg">
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section py-5" id="features">
+    <h2 class="text-center mb-5">Why Choose Our Platform?</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-camera fa-3x mb-3 text-primary"></i>
+                    <h3 class="h5">Real-time Analysis</h3>
+                    <p>Get instant feedback on your pose alignment using our advanced AI technology.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-chart-line fa-3x mb-3 text-primary"></i>
+                    <h3 class="h5">Progress Tracking</h3>
+                    <p>Monitor your improvement with detailed progress reports and statistics.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-book-open fa-3x mb-3 text-primary"></i>
+                    <h3 class="h5">Expert Guidance</h3>
+                    <p>Access detailed instructions and tips from certified yoga instructors.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Poses Section -->
+<section class="poses-section py-5" id="poses">
+    <h2 class="text-center mb-5">Explore Our Yoga Poses</h2>
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100">
+                <img src="{{ url_for('static', filename='images/pranamasana.jpg') }}" class="card-img-top" alt="Pranamasana">
+                <div class="card-body">
+                    <h3 class="h5">Pranamasana</h3>
+                    <p>Begin your practice with the prayer pose, focusing on grounding and centering.</p>
+                    <a href="{{ url_for('page1') }}" class="btn btn-primary">Start Practice</a>
+                </div>
+            </div>
+        </div>
+        <!-- Add more pose cards here -->
+    </div>
+</section>
+
+<!-- Benefits Section -->
+<section class="benefits-section py-5 bg-light" id="benefits">
+    <div class="container">
+        <h2 class="text-center mb-5">Benefits of Regular Practice</h2>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="d-flex align-items-start">
+                    <i class="fas fa-heart fa-2x text-primary me-3"></i>
+                    <div>
+                        <h3 class="h5">Physical Health</h3>
+                        <p>Improve flexibility, strength, and balance while reducing stress and tension.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex align-items-start">
+                    <i class="fas fa-brain fa-2x text-primary me-3"></i>
+                    <div>
+                        <h3 class="h5">Mental Well-being</h3>
+                        <p>Enhance focus, reduce anxiety, and promote overall mental clarity.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section py-5" id="contact">
+    <div class="container">
+        <h2 class="text-center mb-5">Get in Touch</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+{% endblock %} 

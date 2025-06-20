@@ -1,0 +1,173 @@
+{% extends "base_pose.html" %}
+
+{% block title %}Adho Mukha Svanasana - Yoga Pose{% endblock %}
+
+{% block content %}
+<div class="title-container">
+    <h1 class="neon-text">Adho Mukha Svanasana</h1>
+    <div class="description-box">
+        <p>Adho Mukha Svanasana, also known as Downward-Facing Dog, is a foundational pose that stretches and strengthens the entire body while calming the mind.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="glass-card">
+            <h3>Pose Analyzer</h3>
+            <div class="video-container" id="videoContainer" style="display: none;">
+                <img src="{{ url_for('video_feed') }}" width="100%" alt="Video Stream">
+            </div>
+            <div class="text-center mt-3">
+                <button class="btn-neon" onclick="startAnalysis()">Start Analysis</button>
+                <button class="btn-neon" onclick="stopAnalysis()" style="display: none;" id="stopButton">Stop Analysis</button>
+            </div>
+            <div id="result" class="mt-3 text-center"></div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="glass-card">
+            <h3>Reference Pose</h3>
+            <img src="{{ reference_image }}" alt="Reference Pose" class="reference-image">
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="glass-card">
+            <h3>Instructions</h3>
+            <div class="speech-controls">
+                <button id="speechToggle" class="speech-toggle" onclick="toggleSpeech()">
+                    <i class="fas fa-volume-up"></i> Toggle Voice Guide
+                </button>
+            </div>
+            <ul class="instructions-list">
+                {% for instruction in instructions %}
+                <li><i class="fas fa-check-circle"></i> {{ instruction }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12 text-center">
+        <button class="btn-neon" onclick="nextPose()" disabled>Next Pose</button>
+        <div id="countdown" class="mt-3" style="display: none; font-size: 24px; color: #00ff9d;"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let analysisInterval;
+let isAnalyzing = false;
+let countdownInterval;
+
+function startAnalysis() {
+    const videoContainer = document.getElementById('videoContainer');
+    const startButton = document.querySelector('.btn-neon');
+    const stopButton = document.getElementById('stopButton');
+    
+    videoContainer.style.display = 'block';
+    startButton.style.display = 'none';
+    stopButton.style.display = 'inline-block';
+    
+    isAnalyzing = true;
+    analyzePose(); // Initial analysis
+    
+    // Continue analyzing every 2 seconds
+    analysisInterval = setInterval(analyzePose, 4000);
+}
+
+function stopAnalysis() {
+    const videoContainer = document.getElementById('videoContainer');
+    const startButton = document.querySelector('.btn-neon');
+    const stopButton = document.getElementById('stopButton');
+    
+    videoContainer.style.display = 'none';
+    startButton.style.display = 'inline-block';
+    stopButton.style.display = 'none';
+    
+    isAnalyzing = false;
+    clearInterval(analysisInterval);
+}
+
+function startCountdown() {
+    let count = 3;
+    const countdownDiv = document.getElementById('countdown');
+    countdownDiv.style.display = 'block';
+    
+    countdownInterval = setInterval(() => {
+        countdownDiv.textContent = `Moving to next pose in ${count}...`;
+        count--;
+        
+        if (count < 0) {
+            clearInterval(countdownInterval);
+            window.location.href = '/{{ next_pose }}';
+        }
+    }, 1000);
+}
+
+function analyzePose() {
+    if (!isAnalyzing) return;
+    
+    fetch('/analyze_pose', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            pose_name: '{{ pose_name }}'
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        const resultDiv = document.getElementById('result');
+        resultDiv.textContent = data.result;
+        
+        if (data.result === "Pose is correct") {
+            resultDiv.style.color = '#00ff9d';
+            document.querySelector('.btn-neon[onclick="nextPose()"]').disabled = false;
+            window.speechSynthesis.cancel(); // Stop any ongoing speech
+            speak("Great job! Your pose is correct.");
+            stopAnalysis(); // Stop the analysis
+            startCountdown(); // Start the countdown
+        } else {
+            resultDiv.style.color = '#ff4444';
+            document.querySelector('.btn-neon[onclick="nextPose()"]').disabled = true;
+            speak(data.result);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('result').textContent = 'Error analyzing pose';
+    });
+}
+
+// Override the base template's speak function to handle pose analysis feedback
+function speak(text) {
+    if (!speechEnabled) return;
+    
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+    window.speechSynthesis.cancel(); // Cancel any ongoing speech
+    window.speechSynthesis.speak(utterance);
+}
+
+// Override the base template's toggleSpeech function
+function toggleSpeech() {
+    speechEnabled = !speechEnabled;
+    const button = document.getElementById('speechToggle');
+    button.classList.toggle('active');
+    
+    if (speechEnabled) {
+        speakInstructions();
+    } else {
+        window.speechSynthesis.cancel();
+    }
+}
+</script>
+{% endblock %}

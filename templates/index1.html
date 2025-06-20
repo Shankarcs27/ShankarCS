@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YogaPoseEstimation</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">YogaPoseEstimation</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('surya_namaskar') }}">Poses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero page-transition" id="home">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="animate-fade-in">Master Your Yoga Practice</h1>
+                    <p class="animate-fade-in">Experience the perfect blend of ancient wisdom and modern technology. Get real-time feedback on your yoga poses and improve your practice.</p>
+                    <div class="hero-buttons animate-fade-in">
+                        <a href="{{ url_for('surya_namaskar') }}" class="btn btn-primary">Start Practice</a>
+                        <a href="#about" class="btn btn-outline-light">About Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about page-transition" id="about">
+        <div class="container">
+            <h2 class="section-title">Our Journey</h2>
+            <p class="section-subtitle">Where Ancient Wisdom Meets Modern Innovation</p>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-brain feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Smart Learning</h3>
+                        <p class="feature-text">Get instant feedback on your poses with our AI-powered analysis system.</p>
+                        <div class="feature-hover-content">
+                            <p>Experience real-time pose correction and personalized guidance.</p>
+                            <a href="{{ url_for('surya_namaskar') }}" class="feature-link">Try Now <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-heart feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Mindful Practice</h3>
+                        <p class="feature-text">Focus on your breath and alignment with guided instructions.</p>
+                        <div class="feature-hover-content">
+                            <p>Discover the perfect balance of body and mind through guided meditation.</p>
+                            <a href="{{ url_for('surya_namaskar') }}" class="feature-link">Explore <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-chart-line feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Growth Journey</h3>
+                        <p class="feature-text">Track your progress and celebrate your achievements.</p>
+                        <div class="feature-hover-content">
+                            <p>Watch your yoga journey unfold with detailed progress tracking.</p>
+                            <a href="{{ url_for('surya_namaskar') }}" class="feature-link">Start Journey <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-stats">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-number">1000+</h3>
+                                <p class="stat-label">Happy Yogis</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-number">98%</h3>
+                                <p class="stat-label">Success Rate</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-number">24/7</h3>
+                                <p class="stat-label">Support</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact page-transition" id="contact">
+        <div class="container">
+            <h2 class="section-title">Join Our Community</h2>
+            <p class="section-subtitle">Let's grow together on this journey</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="contact-card">
+                        <div class="contact-card-inner">
+                            <div class="contact-card-front">
+                                <i class="fas fa-envelope contact-icon"></i>
+                                <h3 class="contact-title">Drop Us a Mail</h3>
+                                <p class="contact-text">Have questions? We'd love to hear from you.</p>
+                            </div>
+                            <div class="contact-card-back">
+                                <h3>Get in Touch</h3>
+                                <p>Share your yoga journey with us</p>
+                                <a href="mailto:contact@yogapose.com" class="btn btn-primary">Send Email</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="contact-card">
+                        <div class="contact-card-inner">
+                            <div class="contact-card-front">
+                                <i class="fas fa-phone contact-icon"></i>
+                                <h3 class="contact-title">Let's Talk</h3>
+                                <p class="contact-text">Need immediate assistance? We're here to help.</p>
+                            </div>
+                            <div class="contact-card-back">
+                                <h3>Call Us Now</h3>
+                                <p>We're ready to assist you</p>
+                                <a href="tel:+1234567890" class="btn btn-primary">Call Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="social-links-wrapper">
+                <h3 class="social-title">Connect With Us</h3>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/" target="_blank" class="social-link">
+                        <i class="fab fa-facebook"></i>
+                        <span>Facebook</span>
+                    </a>
+                    <a href="https://twitter.com/" target="_blank" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                        <span>Twitter</span>
+                    </a>
+                    <a href="https://www.instagram.com/" target="_blank" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram</span>
+                    </a>
+                    <a href="https://www.youtube.com/" target="_blank" class="social-link">
+                        <i class="fab fa-youtube"></i>
+                        <span>YouTube</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer page-transition">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2024 YogaPoseEstimation. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-right">
+                    <div class="footer-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Page Load Transitions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Remove loading overlay
+            setTimeout(() => {
+                document.querySelector('.loading-overlay').classList.add('fade-out');
+            }, 500);
+
+            // Add loaded class to page transitions
+            setTimeout(() => {
+                document.querySelectorAll('.page-transition').forEach(element => {
+                    element.classList.add('loaded');
+                });
+            }, 600);
+
+            // Intersection Observer for section animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            // Observe sections
+            document.querySelectorAll('.hero, .about, .contact').forEach(section => {
+                observer.observe(section);
+            });
+        });
+
+        // Scroll Progress
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.querySelector(".scroll-progress").style.transform = "scaleX(" + scrolled / 100 + ")";
+        };
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{% extends "base_pose.html" %}
+
+{% block title %}Padangusthasana - Yoga Pose{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="display-4 mb-4">Padangusthasana (Big Toe Pose)</h1>
+    <img src="{{ url_for('static', filename='images/padangusthasana.jpg') }}" alt="Padangusthasana" class="pose-image">
+    <div class="pose-description">
+        <h3>Instructions:</h3>
+        <p>From Hastauttanasana, bend forward from your hips. Try to touch your toes with your hands. Keep your legs straight and head down.</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const instructions = [
+        "From raised arms pose, bend forward from your hips",
+        "Keep your legs straight",
+        "Try to touch your toes with your hands",
+        "Keep your head down",
+        "Breathe normally and maintain the pose"
+    ];
+</script>
+{% endblock %} 

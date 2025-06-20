@@ -1,0 +1,297 @@
+{% extends "base_pose.html" %}
+
+{% block title %}Pranamasana - Yoga Pose{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Title Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="title-container text-center">
+                <h1 class="display-4 fw-bold neon-text mb-3">Pranamasana</h1>
+                <p class="lead text-light mb-4">The Prayer Pose</p>
+                <div class="description-box">
+                    <p class="text-light">
+                        Pranamasana is a centering asana often used as a routine part of Surya Namaskar or as a transitional pose. 
+                        While standing, sitting or squatting, the palms press together in front of the heart's center while allowing the shoulders 
+                        to roll down the back and the elbows to rest at the sides of the rib cage. Pranamasana is also known as prayer pose in English.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="progress-container">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: {{ progress }}%;" 
+                         aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100">
+                        {{ progress }}%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Reference Image -->
+        <div class="col-md-6 mb-4">
+            <div class="card glass-card h-100">
+                <div class="card-header">
+                    <h4 class="mb-0 text-light"><i class="fas fa-image me-2"></i>Reference Pose</h4>
+                </div>
+                <div class="card-body">
+                    <img src="{{ reference_image }}" alt="Reference Pose" class="img-fluid pose-image rounded">
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Camera Feed -->
+        <div class="col-md-6 mb-4">
+            <div class="card glass-card h-100">
+                <div class="card-header">
+                    <h4 class="mb-0 text-light"><i class="fas fa-video me-2"></i>Your Pose</h4>
+                </div>
+                <div class="card-body">
+                    <div id="video-container" class="position-relative">
+                        <video id="video" width="100%" autoplay class="rounded"></video>
+                        <div id="pose-status" class="position-absolute top-0 end-0 m-3">
+                            <span class="badge bg-success" style="display: none;">Correct Pose!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="col-12 mb-4">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h4 class="mb-0 text-light"><i class="fas fa-list-ol me-2"></i>Instructions</h4>
+                </div>
+                <div class="card-body">
+                    <div class="pose-description">
+                        <ol class="mb-0 text-light">
+                            {% for instruction in instructions %}
+                            <li class="mb-3">{{ instruction }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Next Button -->
+        <div class="col-12 text-center mb-4">
+            <a href="{{ url_for(next_pose) }}" 
+               class="btn btn-neon btn-lg px-5 py-3" 
+               id="nextButton" 
+               style="display: none;">
+                Next Pose <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+:root {
+    --primary-blue: #008bff;
+    --secondary-blue:rgb(0, 0, 0);
+    --dark-bg: #121212;
+    --darker-bg: #0a0a0a;
+    --glass-bg: rgba(0, 139, 255, 0.1);
+    --glass-border: rgba(0, 184, 255, 0.2);
+}
+
+body {
+    background: var(--dark-bg);
+    color: #fff;
+}
+
+/* Add video mirroring */
+#video {
+    transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    -moz-transform: scaleX(-1);
+    -ms-transform: scaleX(-1);
+}
+
+.title-container {
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(0, 139, 255, 0.1) 0%, rgba(0, 184, 255, 0.1) 100%);
+    border-radius: 20px;
+    border: 1px solid var(--primary-blue);
+    box-shadow: 0 0 20px rgba(0, 139, 255, 0.2);
+}
+
+.neon-text {
+    color: var(--primary-blue);
+    text-shadow: 0 0 5px var(--primary-blue),
+                 0 0 10px var(--primary-blue);
+    font-size: 3.5rem;
+    letter-spacing: 2px;
+}
+
+.description-box {
+    background: var(--darker-bg);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 1px solid var(--primary-blue);
+    margin-top: 1rem;
+}
+
+.glass-card {
+    background: var(--darker-bg);
+    border: 1px solid var(--primary-blue);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 139, 255, 0.1);
+}
+
+.glass-card .card-header {
+    background: rgba(0, 139, 255, 0.1);
+    border-bottom: 1px solid var(--primary-blue);
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.progress-container {
+    padding: 10px;
+    border-radius: 15px;
+    background: var(--darker-bg);
+    border: 1px solid var(--primary-blue);
+}
+
+.progress {
+    height: 25px;
+    background: var(--dark-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--primary-blue);
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+    box-shadow: 0 0 10px var(--primary-blue);
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.pose-image {
+    transition: transform 0.3s ease;
+    border: 2px solid var(--primary-blue);
+}
+
+.pose-image:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 15px var(--primary-blue);
+}
+
+#video-container {
+    overflow: hidden;
+    border-radius: 8px;
+    border: 2px solid var(--primary-blue);
+}
+
+.card {
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(0, 139, 255, 0.3);
+}
+
+.btn-neon {
+    background: linear-gradient(45deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+    border: none;
+    color: white;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 10px var(--primary-blue);
+    transition: all 0.3s ease;
+}
+
+.btn-neon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px var(--primary-blue);
+    color: white;
+}
+
+#pose-status .badge {
+    background: linear-gradient(45deg, #00ff00 0%, #00cc00 100%);
+    box-shadow: 0 0 10px #00ff00;
+    font-size: 1rem;
+    padding: 8px 16px;
+}
+
+.text-light {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.lead {
+    color: var(--primary-blue) !important;
+    font-size: 1.5rem;
+    text-shadow: 0 0 5px var(--primary-blue);
+}
+</style>
+
+<script>
+    // Initialize camera
+    const video = document.getElementById('video');
+    const nextButton = document.getElementById('nextButton');
+    const poseStatus = document.querySelector('#pose-status .badge');
+    
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+                video.srcObject = stream;
+            })
+            .catch(function(error) {
+                console.error("Error accessing camera:", error);
+            });
+    }
+
+    // Analyze pose periodically
+    setInterval(function() {
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        fetch('/analyze_pose', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                pose_name: '{{ pose_name }}',
+                image: canvas.toDataURL('image/jpeg')
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.result === 'correct') {
+                nextButton.style.display = 'inline-block';
+                poseStatus.style.display = 'block';
+            } else {
+                nextButton.style.display = 'none';
+                poseStatus.style.display = 'none';
+            }
+        });
+    }, 1000);
+</script>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const instructions = [
+        "Stand straight with your feet together",
+        "Join your palms in front of your chest in a prayer position",
+        "Keep your spine straight",
+        "Relax your shoulders",
+        "Breathe normally and maintain the pose"
+    ];
+</script>
+{% endblock %}
